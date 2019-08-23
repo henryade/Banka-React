@@ -1,10 +1,296 @@
-body {
-  background: green;
+@import url('https://fonts.googleapis.com/css?family=Quicksand:400,700&display=swap');
+
+/* Element styles */
+
+@keyframes arrowJiggle {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-30px);
+  }
+  60% {
+    transform: translateY(-15px);
+  }
 }
 
-.landing-background{
-    height: 100%;
-    background: url('../public/background5.jpg') no-repeat; 
-    background-position: center; 
-    background-size: cover;
+#root {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  background: #ffffff;
+  font-family: Quicksand;
+}
+
+html,
+body {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+header #brand h1 {
+  display: inline;
+  font-family: Comic Sans MS;
+}
+
+header img {
+  width: 30px;
+  height: 30px;
+}
+
+header a * {
+  display: inline;
+  margin-right: 10px;
+}
+
+header h1 {
+  font-family: Comic Sans MS;
+}
+
+a {
+  text-decoration: none;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  margin: 0 auto;
+  padding-top: 2.5%;
+}
+
+ul {
+  margin: 5px 0 5px 0;
+}
+
+footer {
+  background-color: #1d5ab2;
+  color: #ffffff;
+  height: 50px;
+  width: 100%;
+  font-size: 18px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20vh;
+}
+
+article {
+  color: #ffffff;
+  align-content: center;
+  justify-content: center;
+  height: 80%;
+  font-weight: bold;
+  font-size: 2.8vw;
+  margin: 15vh 0 0 10%;
+}
+
+article button {
+  margin-top: 4.5%;
+}
+
+button {
+  display: block;
+}
+
+/* Classes */
+
+.btn {
+  position: absolute;
+  background-color: #ffab57;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 25px;
+  line-height: 22px;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.btn-bg {
+  padding: 20px 40px;
+}
+
+.btn-curve {
+  border-radius: 37px;
+}
+
+.navlinks {
+  list-style: none;
+  font-family: Quicksand;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 25px;
+  color: #ffffff;
+  display: flex;
+  justify-content: space-around;
+  cursor: pointer;
+  padding: 0;
+}
+
+.navlinks li:nth-child(1) {
+  margin-right: 30px;
+}
+
+.white {
+  color: white;
+}
+
+.landing {
+  background-color: #1d5ab2;
+  width: 100%;
+  height: 88vh;
+  border-radius: 0 0 120px 120px;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+}
+
+.col {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.col-5 {
+  flex-basis: 50%;
+}
+
+.col-6 {
+  flex-basis: 60%;
+}
+
+.col-4 {
+  flex-basis: 40%;
+}
+
+.col-8 {
+  flex-basis: 80%;
+}
+
+.col-2 {
+  flex-basis: 20%;
+}
+
+.col--5 {
+  flex-basis: 48%;
+}
+
+.landing-img {
+  width: 80%;
+  height: 70vh;
+}
+
+.circle {
+  border-radius: 100px;
+}
+
+.landing-second-section div div img {
+  height: 160px;
+  width: 160px;
+  align-self: center;
+}
+
+.landing-second-section div div {
+  background-color: #f3f9ff;
+  height: 215px;
+  width: 215px;
+  flex-wrap: wrap;
+}
+
+.landing-second-section div {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  width: 100%;
+}
+
+.landing-second-section {
+  margin-top: 10%;
+}
+
+.circle p {
+  margin-top: 60px;
+  text-align: center;
+}
+
+.scrolldown img {
+  width: 70px;
+  height: 70px;
+}
+
+.scrolldown {
+  text-align: center;
+  margin-top: -1vh;
+  animation: arrowJiggle infinite 2s 1s ease-in-out;
+}
+
+@media screen and (max-width: 750px) {
+  article {
+    font-size: 3vw;
+    color: #1d5ab2;
+    margin: 0 auto 3vh auto;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+  }
+  article button {
+    margin-top: 14vh;
+  }
+  .col {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  header *,
+  header .white {
+    color: #1d5ab2;
+  }
+  .landing {
+    background-color: #ffffff;
+  }
+  .landing-img {
+    width: 95vw;
+    height: 50vh;
+  }
+  .con-center {
+    text-align: center;
+    margin-top: 5vh;
+  }
+  .navlinks {
+    font-size: initial;
+  }
+  header h1 {
+    font-size: 20px;
+  }
+
+  header img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .scrolldown {
+    display: none;
+  }
+  footer {
+    margin-top: 0;
+  }
+
+  .landing-second-section div {
+    flex-direction: column;
+    display: none;
+  }
+
+  .btn {
+    font-size: 15px;
+  }
+  
+  .btn-bg {
+    padding: 10px 20px;
+  }
 }
