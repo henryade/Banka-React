@@ -1,14 +1,15 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Nav from '../Nav/Nav';
 import Landing from '../Landing/Landing';
 
 const HeaderContainer = () => (
   <div className="landing">
     <header>
-      <a href="index.html">
+      <Link to="/">
         <img src="assets/banka.png" alt="banka logo" />
         <h1 className="white">Banka</h1>
-      </a>
+      </Link>
       <Nav />
     </header>
     <Landing />
