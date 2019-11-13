@@ -1,11 +1,11 @@
 import React from 'react';
-import Header from '../Header/Header';
+import HeaderContainer from '../Header/HeaderContainer';
 import Footer from '../Footer/Footer';
 import Body from '../Landing/Body';
 
 const Homepage = () => (
   <>
-    <Header />
+    <HeaderContainer />
     <Body />
     <Footer />
   </>

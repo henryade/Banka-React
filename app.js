@@ -1,14 +1,9 @@
 const express = require('express');
-const path = require('path');
-const debug = require('debug');
-const { config } = require('dotenv');
+const log = require('fancy-log');
 
-config();
-
+const port = 8000;
 const app = express();
-const { PORT, NODE_ENV } = process.env;
-const log = debug(NODE_ENV);
 
-app.use('/', express.static(path.join(__dirname, '/dist')));
+app.use(express.static('dist'));
 
-app.listen(PORT, () => log(`Server Started at ${PORT}`));
+app.listen(port, () => log(`Server running at ${port}`));
