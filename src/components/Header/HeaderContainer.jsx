@@ -1,16 +1,14 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import Nav from '../Nav/Nav';
 import Landing from '../Landing/Landing';
+import { authlinks } from '../../utils/NavData';
+import Logo from '../Common/Logo';
 
 const HeaderContainer = () => (
   <div className="landing">
-    <header>
-      <Link to="/">
-        <img src="assets/banka.png" alt="banka logo" />
-        <h1 className="white">Banka</h1>
-      </Link>
-      <Nav />
+    <header className="landingHeader">
+      <Logo className="white" />
+      <Nav customClass="navlinks whitelink" links={authlinks} />
     </header>
     <Landing />
     <div className="scrolldown">

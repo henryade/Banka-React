@@ -1,17 +1,23 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+// import PropTypes from 'prop-types';
 import LinkWapper from '../Links/LinkWrapper';
 
-const links = [
-  { key: 'signup', link: <NavLink to="/signup">SignUp</NavLink> },
-  { key: 'signin', link: <NavLink to="/signin">SignIn</NavLink> }
-];
-const Nav = () => (
+const Nav = ({ customClass, links }) => (
   <nav>
-    <ul className="navlinks">
+    <ul className={customClass}>
       <LinkWapper links={links} />
     </ul>
   </nav>
 );
+
+// Nav.propTypes = {
+//   customClass: PropTypes.string,
+//   links: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.node])).isRequired
+// };
+
+// Nav.defaultProps = {
+//   customClass: ''
+// };
 
 export default Nav;

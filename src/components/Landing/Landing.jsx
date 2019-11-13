@@ -7,7 +7,7 @@ const Landing = () => (
       <article>
         Bank with Banka Today and discovery a Fast and Easier way to perform
         banking operations from any locations on any modern device.
-        <ButtonContainer btnClass="btn btn-bg btn-curve" text="GET STARTED" />
+        <ButtonContainer btnClass="btn btn-bg btn-curve" text="GET STARTED" link="/signup" />
       </article>
     </main>
     <aside className="col-5 con-center">
