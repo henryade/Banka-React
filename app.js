@@ -1,9 +1,12 @@
 const express = require('express');
 const log = require('fancy-log');
+const { config } = require('dotenv');
 
-const port = 8000;
+config();
+
+const { PORT } = process.env;
 const app = express();
 
 app.use(express.static('dist'));
 
-app.listen(port, () => log(`Server running at ${port}`));
+app.listen(PORT, () => log(`Server running at ${PORT}`));
