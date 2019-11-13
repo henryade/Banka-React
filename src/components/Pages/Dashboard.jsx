@@ -2,11 +2,10 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import Header from '../Header/Header';
 
-const Dashboard = props => (
+const Dashboard = () => (
   <>
     <Header />
     <div>Welcome man</div>
-    <div>{console.log(props)}</div>
   </>
 );
 

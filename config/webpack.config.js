@@ -1,5 +1,7 @@
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const { config } = require('dotenv');
+const { DefinePlugin } = require('webpack');
 
 module.exports = {
   entry: path.join(__dirname, '../src/index.js'),
@@ -34,5 +36,8 @@ module.exports = {
   },
   plugins: [
     new CopyWebpackPlugin([{ from: 'public' }]),
+    new DefinePlugin({
+      'process.env': JSON.stringify(config().parsed)
+    })
   ]
 };

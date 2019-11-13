@@ -1,8 +1,9 @@
 import axios from 'axios';
 import * as ActionTypes from '../actionTypes';
+import { setItems } from '../utils/LocalStorage';
+import { Capitalize } from '../utils/StringFormatter';
 
-const API_URL = 'http://localhost:3000/api/v1';
-// const API_URL = 'https://bankaproject.herokuapp.com/api/v1';
+const { API_URL } = process.env;
 
 export const SIGNUP_SUCCESS = data => ({
   type: ActionTypes.SIGNUP_SUCCESS,
@@ -16,12 +17,19 @@ export const SIGNUP_FAILURE = error => ({
 
 export const SIGNUP_REQUEST = body => async (dispatch) => {
   try {
-    console.log(body);
-    const response = await axios.post(`${API_URL}/auth/signup`, body);
-    console.log(response);
-    return dispatch(SIGNUP_SUCCESS(response.data.data));
+    const { data: { data } } = await axios.post(`${API_URL}/auth/signup`, body);
+    const {
+      token, imageurl, firstName, lastName, email
+    } = data;
+    setItems({
+      token,
+      img: imageurl,
+      fullname: Capitalize(`${firstName} ${lastName}`),
+      email
+    });
+    return dispatch(SIGNUP_SUCCESS(data));
   } catch (error) {
-    console.log(error.response.data);
-    dispatch(SIGNUP_FAILURE(error.response.data.error));
+    const message = error.response ? error.response.data.error : error.message;
+    dispatch(SIGNUP_FAILURE(message));
   }
 };

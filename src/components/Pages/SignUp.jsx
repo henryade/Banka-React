@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React, { Component } from 'react';
 import Swal from 'sweetalert2';
 import PropTypes from 'prop-types';
@@ -30,13 +29,21 @@ class SignUp extends Component {
     passwordError: '',
     confirmPassword: '',
     confirmPasswordError: '',
-    disableButton: true,
+    showTooltip: false
   };
 
   static propTypes = {
     SignUpUser: PropTypes.func.isRequired,
-    data: PropTypes.objectOf(PropTypes.objectOf()).isRequired,
-    history: PropTypes.objectOf(PropTypes.func).isRequired
+    data: PropTypes.objectOf(
+      PropTypes.oneOfType([
+        PropTypes.object, PropTypes.bool, PropTypes.array, PropTypes.string, PropTypes.func
+      ])
+    ).isRequired,
+    history: PropTypes.objectOf(
+      PropTypes.oneOfType([
+        PropTypes.func, PropTypes.number, PropTypes.string, PropTypes.object
+      ])
+    ).isRequired
   }
 
   /**
@@ -47,6 +54,12 @@ class SignUp extends Component {
   */
   handleSubmit = async (event) => {
     event.preventDefault();
+
+    if (checkErrorState(this.state).length || checkUserState(this.state).length) {
+      this.setState({ showTooltip: true });
+      return;
+    }
+
     const {
       firstName, lastName, email: userEmail,
       password: userPassword, confirmPassword: userConfirmPassword
@@ -61,7 +74,7 @@ class SignUp extends Component {
     });
     await Swal.fire({
       title: 'Now loading',
-      allowEscapeKey: true,
+      allowEscapeKey: false,
       allowOutsideClick: false,
       timer: 2000,
       onOpen: () => {
@@ -69,9 +82,9 @@ class SignUp extends Component {
       }
     });
     const { data: { Auth }, history: { push } } = this.props;
-
-    const alertText = Auth.error
-      ? { type: 'error', title: Capitalize(Auth.error) }
+    const title = Auth.error !== null ? Capitalize(Auth.error) : 'Error Occured';
+    const alertText = Auth.error || !Auth.user.id
+      ? { type: 'error', title }
       : { type: 'success', title: 'Sign Up Successful' };
 
     await Swal.fire({
@@ -79,7 +92,6 @@ class SignUp extends Component {
       showConfirmButton: false,
       timer: 1500
     });
-    // console.log('dfyhfuyuyg', Auth);
     if (Auth.isAuthenticated) {
       setAuth([{ token: Auth.user.token }]);
       push('/home');
@@ -94,19 +106,47 @@ class SignUp extends Component {
   */
   handleChange = input => (e) => {
     const { value } = e.target;
-    const errorState = this.updateErrorState(input, e);
-    this.setState((prevState) => {
-      const newState = {
-        ...prevState,
-        [input]: value,
-        ...errorState,
-      };
-      return {
-        ...newState,
-        disableButton: !(!checkErrorState(newState).length && !checkUserState(newState).length)
-      };
-    });
+    this.setState({ [input]: value });
   }
+
+  /**
+  * @description handleBlur
+  * @param {string} input field input
+  * @memberof SignUp
+  * @returns {null} returns null
+  */
+  handleBlur = input => (e) => {
+    const errorState = this.updateErrorState(input, e);
+    this.setState({ ...errorState });
+  }
+
+  /**
+  * @description showError
+  * @memberof SignUp
+  * @returns {boolean} returns true or false
+  */
+  showError = () => checkErrorState(this.state).length || checkUserState(this.state);
+
+  /**
+  * @description handleFocus
+  * @param {string} input field input
+  * @memberof SignUp
+  * @returns {null} returns null
+  */
+  handleFocus = input => () => {
+    this.setState({ [`${input}Error`]: '' });
+  }
+
+  /**
+  * @description handleMouseOut
+  * @param {string} input field input
+  * @memberof SignUp
+  * @returns {null} returns null
+  */
+  handleMouseOut = () => {
+    this.setState({ showTooltip: false });
+  }
+
 
   /**
   * @description updateErrorState
@@ -146,7 +186,10 @@ class SignUp extends Component {
         handleChange={this.handleChange}
         handleSubmit={this.handleSubmit}
         handleBlur={this.handleBlur}
+        handleFocus={this.handleFocus}
+        handleMouseOut={this.handleMouseOut}
         values={this.state}
+        componentProps={this.props}
         data={signUpData}
         formtype="Sign Up"
       />

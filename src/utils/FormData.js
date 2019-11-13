@@ -20,7 +20,7 @@ export const signUpData = [
     placeholder: 'Email',
     class: 'authInput input-lg',
     required: true,
-    screenPortion: 0,
+    screenPortion: false,
   },
   {
     type: 'password',
@@ -29,7 +29,7 @@ export const signUpData = [
     placeholder: 'Password',
     class: 'authInput input-lg',
     required: true,
-    screenPortion: 0,
+    screenPortion: false,
   },
   {
     type: 'password',
@@ -38,7 +38,7 @@ export const signUpData = [
     placeholder: 'Confirm Password',
     class: 'authInput input-lg',
     required: true,
-    screenPortion: 0,
+    screenPortion: false,
   },
 ];
 
