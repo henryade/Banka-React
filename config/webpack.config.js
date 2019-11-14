@@ -37,7 +37,9 @@ module.exports = {
   plugins: [
     new CopyWebpackPlugin([{ from: 'public' }]),
     new DefinePlugin({
-      'process.env': JSON.stringify(config().parsed)
+      'process.env': {
+        API_URL: JSON.stringify(process.env.API_URL),
+      },
     })
   ]
 };
