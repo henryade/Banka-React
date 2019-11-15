@@ -3,6 +3,8 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { config } = require('dotenv');
 const { DefinePlugin } = require('webpack');
 
+config();
+
 module.exports = {
   entry: path.join(__dirname, '../src/index.js'),
   output: {
@@ -39,6 +41,7 @@ module.exports = {
     new DefinePlugin({
       'process.env': {
         API_URL: JSON.stringify(process.env.API_URL),
+        API_URL_TEST: JSON.stringify(process.env.API_URL_TEST),
       },
     })
   ]

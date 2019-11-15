@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import Swal from 'sweetalert2';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
 import UserForm from '../Form/UserForm';
 import {
   name, email, password, confirmPassword
 } from '../../utils/AuthValidation';
 import { checkErrorState, checkUserState } from '../../utils/validationHelper';
 import { Capitalize } from '../../utils/StringFormatter';
-import { setAuth } from '../../utils/AuthHelper';
 import { signUpData } from '../../utils/FormData';
+import { AUTH_REQUEST } from '../../actions/auth';
+import HocConnect from '../../utils/HocConnect';
+
 /**
  *
  *
@@ -70,7 +71,8 @@ class SignUp extends Component {
       lastName,
       email: userEmail,
       password: userPassword,
-      confirmPassword: userConfirmPassword
+      confirmPassword: userConfirmPassword,
+      action: 'signup'
     });
     await Swal.fire({
       title: 'Now loading',
@@ -93,7 +95,6 @@ class SignUp extends Component {
       timer: 1500
     });
     if (Auth.isAuthenticated) {
-      setAuth([{ token: Auth.user.token }]);
       push('/home');
     }
   }
@@ -197,4 +198,4 @@ class SignUp extends Component {
   }
 }
 
-export default withRouter(SignUp);
+export default HocConnect(SignUp, 'SignUpUser', AUTH_REQUEST);
