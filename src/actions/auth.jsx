@@ -15,9 +15,25 @@ export const SIGNUP_FAILURE = error => ({
   error
 });
 
-export const SIGNUP_REQUEST = body => async (dispatch) => {
+export const PROCESSING_REQUEST = () => ({
+  type: ActionTypes.PROCESSING_REQUEST
+});
+
+export const SIGNIN_SUCCESS = data => ({
+  type: ActionTypes.SIGNIN_SUCCESS,
+  data
+});
+
+export const SIGNIN_FAILURE = error => ({
+  type: ActionTypes.SIGNIN_FAILURE,
+  error
+});
+
+export const AUTH_REQUEST = body => async (dispatch) => {
+  const { action, ...requestBody } = body;
+  dispatch(PROCESSING_REQUEST());
   try {
-    const { data: { data } } = await axios.post(`${API_URL}/auth/signup`, body);
+    const { data: { data } } = await axios.post(`${API_URL}/auth/${action}`, requestBody);
     const {
       token, imageurl, firstName, lastName, email
     } = data;
@@ -27,9 +43,9 @@ export const SIGNUP_REQUEST = body => async (dispatch) => {
       fullname: Capitalize(`${firstName} ${lastName}`),
       email
     });
-    return dispatch(SIGNUP_SUCCESS(data));
+    return action === 'signup' ? dispatch(SIGNUP_SUCCESS(data)) : dispatch(SIGNIN_SUCCESS(data));
   } catch (error) {
     const message = error.response ? error.response.data.error : error.message;
-    dispatch(SIGNUP_FAILURE(message));
+    return action === 'signup' ? dispatch(SIGNUP_FAILURE(message)) : dispatch(SIGNIN_FAILURE(message));
   }
 };

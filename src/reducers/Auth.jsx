@@ -24,13 +24,26 @@ const authReducer = (state = initialState, action) => {
         isAuthenticated: false,
         error: action.error
       };
+    case ActionTypes.SIGNIN_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        isAuthenticated: true,
+        user: action.data,
+        error: null
+      };
+    case ActionTypes.SIGNIN_FAILURE:
+      return {
+        ...state,
+        isLoading: false,
+        isAuthenticated: false,
+        error: action.error
+      };
     case ActionTypes.PROCESSING_REQUEST:
       return {
         ...state,
         isLoading: true,
         isAuthenticated: false,
-        user: {},
-        error: null
       };
     default:
       return state;

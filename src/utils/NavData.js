@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { clearItems } from './LocalStorage';
 
 export const authlinks = [
   {
@@ -15,6 +16,6 @@ export const authlinks = [
 export const logout = [
   {
     key: 'logout',
-    link: <NavLink to={{ pathname: '/', state: { modal: true } }}>Log Out</NavLink>
+    link: <NavLink onClick={() => clearItems()} to={{ pathname: '/', state: { modal: true } }}>Log Out</NavLink>
   }
 ];

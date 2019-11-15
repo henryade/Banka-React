@@ -6,6 +6,6 @@ export const checkErrorState = (state) => {
 
 // Checking if any of the input in the component state is empty
 export const checkUserState = (state) => {
-  const userDetails = Object.keys(state).filter(key => !key.includes('Error') && !key.includes('Button'));
+  const userDetails = Object.keys(state).filter(key => !key.includes('Error') && !key.includes('show'));
   return userDetails.map(input => state[input]).filter(input => input === '');
 };

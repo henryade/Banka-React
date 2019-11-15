@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Paper, Typography, Container, Grid, TextField, Tooltip, Button
@@ -56,7 +57,7 @@ class UserForm extends Component {
   };
 
   /**
-  * @description handleClickx
+z* @description handle Click
   * @param {string} input field input
   * @memberof SignUp
   * @returns {null} returns null
@@ -74,19 +75,22 @@ class UserForm extends Component {
     } = this.props;
     const { CustomTextField } = this;
     return (
-      <Container className="paper-container text-center" maxWidth="md">
+      <Container className={`paper-container${(formtype === 'Sign Up') ? '' : '-signin'} text-center`} maxWidth="md">
         <Logo className="white" linkClass="mobile-only auth-brand-logo" />
         <Paper>
-          <Grid container spacing={2}>
+          <Grid direction={(formtype === 'Sign Up') ? 'row' : 'row-reverse'} container spacing={2}>
             <Grid className="desktop-only nopaddingmargin" item sm={6} md={6}>
               <div className="fullheightwidth blue-background curved-edge">
                 <Logo className="white" linkClass="auth-brand-logo" />
                 <div className="box-center white">
                   <Typography variant="h3" component="h2">
-                    Welcome Back!
+                    { (formtype === 'Sign Up') ? 'Welcome Back!' : 'Hello Friend!'}
                   </Typography>
-                  <p className="medium-text medium-width">To continue our awesome journey together, login with your personal details</p>
-                  <Button variant="outlined" size="large" className="white-border" onClick={this.handleClick('signin')}>Sign In</Button>
+                  <p className="medium-text medium-width">
+                    { (formtype === 'Sign Up') ? 'To continue our awesome journey together, login with your personal details'
+                      : 'Enter your personal details and start banking with us'}
+                  </p>
+                  <Button variant="outlined" size="large" className="white-border" onClick={this.handleClick((formtype === 'Sign Up') ? 'signin' : 'signup')}>{(formtype === 'Sign Up') ? 'Sign In' : 'Sign Up'}</Button>
                 </div>
               </div>
             </Grid>
@@ -120,10 +124,26 @@ class UserForm extends Component {
                 <Grid item xs={12}>
                   <Tooltip title="Fill All Fields Appropriately" open={values.showTooltip}>
                     <Button type="submit" variant="contained" className="btn-size" size="large" color="primary" onMouseLeave={handleMouseOut} onBlur={handleMouseOut}>
-                      Register
+                      { (formtype === 'Sign Up') ? 'Register' : 'Log In'}
                     </Button>
                   </Tooltip>
                 </Grid>
+                { (formtype === 'Sign Up')
+                  ? (
+                    <span className="mobile-only mobile-span">
+                      Already Registered?
+                      {' '}
+                      <Link to="/signin">Log In</Link>
+                    </span>
+                  )
+                  : (
+                    <span className="mobile-only mobile-span">
+                      New User?
+                      {' '}
+                      <Link to="/signup">Register</Link>
+                    </span>
+                  )
+                  }
               </form>
             </Grid>
           </Grid>

@@ -65,6 +65,10 @@ body {
   margin: 5% auto 0 auto;
 }
 
+.paper-container-signin {
+  margin: 10% auto 0 auto;
+}
+
 .box-center {
   display: flex;
   flex-direction: column;
@@ -274,6 +278,11 @@ div .otherHeader {
   min-height: 470px;
 }
 
+.mobile-span {
+  margin-top: 17px;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
 .circle {
   border-radius: 100px;
 }
@@ -385,7 +394,7 @@ div .otherHeader {
     margin-top: 7px !important;
   }
   .MuiInputBase-root .MuiFilledInput-input {
-    padding-top: 20px;
+    padding-top: 17px;
   }
   body {
     background: radial-gradient(circle, rgba(0,255,158,1) 30%, rgba(29,90,178,1) 100%);
@@ -470,6 +479,9 @@ div .otherHeader {
 @media screen and (max-width: 415px) {
   .form-width {
     padding: 10px;
+  }
+  .MuiTypography-h4 {
+    font-size: 1.7rem !important;
   }
   .paper-container {
     margin-top: 5%;
