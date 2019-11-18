@@ -50,7 +50,7 @@ class SignIn extends Component {
       email: userEmail, password: userPassword, emailError
     } = this.state;
 
-    if (emailError.length || checkUserState(this.state).length) {
+    if ((emailError && emailError.length) || checkUserState(this.state).length) {
       this.setState({ showTooltip: true });
       return;
     }
@@ -71,7 +71,7 @@ class SignIn extends Component {
       }
     });
     const { data: { Auth }, history: { push } } = this.props;
-    const title = Auth.error !== null ? Capitalize(Auth.error) : 'Error Occured';
+    const title = Auth.error !== null && Auth.error !== undefined ? Capitalize(Auth.error) : 'Error Occured';
     const alertText = Auth.error || !Auth.user.id
       ? { type: 'error', title }
       : { type: 'success', title: 'Sign Up Successful' };
