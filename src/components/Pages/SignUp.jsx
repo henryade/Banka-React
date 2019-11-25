@@ -34,7 +34,7 @@ class SignUp extends Component {
   };
 
   static propTypes = {
-    SignUpUser: PropTypes.func.isRequired,
+    dispatchRequest: PropTypes.func.isRequired,
     data: PropTypes.objectOf(
       PropTypes.oneOfType([
         PropTypes.object, PropTypes.bool, PropTypes.array, PropTypes.string, PropTypes.func
@@ -65,7 +65,7 @@ class SignUp extends Component {
       firstName, lastName, email: userEmail,
       password: userPassword, confirmPassword: userConfirmPassword
     } = this.state;
-    const { SignUpUser } = this.props;
+    const { dispatchRequest: SignUpUser } = this.props;
     await SignUpUser({
       firstName,
       lastName,
@@ -176,12 +176,12 @@ class SignUp extends Component {
 
 
   /**
-  * @description handleChange changes
-  * @param {string} input field input
+  * @description Render JSX
   * @memberof SignUp
   * @returns {null} returns null
   */
   render() {
+    const { data: { Auth: { isLoading } } } = this.props;
     return (
       <UserForm
         handleChange={this.handleChange}
@@ -193,9 +193,10 @@ class SignUp extends Component {
         componentProps={this.props}
         data={signUpData}
         formtype="Sign Up"
+        isLoading={isLoading}
       />
     );
   }
 }
 
-export default HocConnect(SignUp, 'SignUpUser', AUTH_REQUEST);
+export default HocConnect(SignUp, AUTH_REQUEST);

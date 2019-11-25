@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Quicksand:400,700&display=swap');
-
+@import url('https://fonts.googleapis.com/css?family=Quicksand:400,700|Open+Sans:600&display=swap');
 /* Element styles */
 
 @keyframes arrowJiggle {
@@ -18,7 +17,7 @@
   }
 }
 
-#root{
+#root {
   height: 100%;
   width: 100%;
 }
@@ -142,6 +141,10 @@ button {
   display: block;
 }
 
+.block {
+  display: block;
+}
+
 /* Classes */
 
 .btn {
@@ -168,6 +171,9 @@ button {
 
 .btn-bg {
   padding: 20px 40px;
+}
+.center-text {
+  text-align: center;
 }
 
 .btn-curve {
@@ -229,6 +235,11 @@ button {
   color: #1d5ab2;
 }
 
+.half-width {
+  width: 50%;
+  margin: 5rem auto;
+}
+
 .landing {
   background-color: #1d5ab2;
   width: 100%;
@@ -278,9 +289,13 @@ div .otherHeader {
   min-height: 470px;
 }
 
-.mobile-span {
+.mobile-links {
   margin-top: 17px;
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.mobile-span {
+  margin-bottom: 10px;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .circle {
@@ -310,6 +325,14 @@ div .otherHeader {
 .fullheightwidth {
   height: 100%;
   width: 100%;
+}
+
+.loader{
+  margin-top: 1.5rem;
+}
+
+.sweet-alert p {
+  display: none !important;
 }
 
 .nopaddingmargin {
@@ -376,6 +399,10 @@ div .otherHeader {
     text-align: center;
     width: 90%;
   }
+  .half-width {
+    width: 100%;
+    margin: 1.5rem auto;
+  }
   article button {
     margin-left: auto;
     margin-right: auto;
@@ -396,8 +423,11 @@ div .otherHeader {
   .MuiInputBase-root .MuiFilledInput-input {
     padding-top: 17px;
   }
+  .MuiContainer-root {
+    width: 60% !important;
+  }
   body {
-    background: radial-gradient(circle, rgba(0,255,158,1) 30%, rgba(29,90,178,1) 100%);
+    background: radial-gradient(circle, rgba(0, 255, 158, 1) 30%, rgba(29, 90, 178, 1) 100%);
   }
   .col {
     display: flex;
@@ -421,7 +451,8 @@ div .otherHeader {
     padding: 0;
     margin: 4px 0 0 0;
   }
-  .navlinks li, .landingHeader div {
+  .navlinks li,
+  .landingHeader div {
     z-index: 10;
   }
   .landingHeader h1,
@@ -459,9 +490,18 @@ div .otherHeader {
   }
 }
 
+@media screen and (max-width: 650px) {
+  .MuiContainer-root {
+    width: 80% !important;
+  }
+}
+
 @media screen and (max-width: 520px) {
   article {
     margin-top: -4rem;
+  }
+  .MuiContainer-root {
+    width: 100% !important;
   }
 }
 
@@ -481,7 +521,7 @@ div .otherHeader {
     padding: 10px;
   }
   .MuiTypography-h4 {
-    font-size: 1.7rem !important;
+    font-size: 1.6rem !important;
   }
   .paper-container {
     margin-top: 5%;
@@ -498,7 +538,6 @@ div .otherHeader {
   .form-width {
     padding-top: 7px;
   }
-
   .paper-container {
     margin-top: 1%;
   }

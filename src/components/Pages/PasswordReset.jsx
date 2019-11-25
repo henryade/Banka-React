@@ -5,23 +5,22 @@ import UserForm from '../Form/UserForm';
 import { email } from '../../utils/AuthValidation';
 import { Capitalize } from '../../utils/StringFormatter';
 import { checkUserState } from '../../utils/validationHelper';
-import { signInData } from '../../utils/FormData';
-import { AUTH_REQUEST } from '../../actions/auth';
+import { resetPasswordData } from '../../utils/FormData';
+import { RESET_PASSWORD_REQUEST } from '../../actions/auth';
 import HocConnect from '../../utils/HocConnect';
 
 /**
  *
  *
  * @export
- * @class SignIn
+ * @class PasswordReset
  * @extends {Component}
  */
-class SignIn extends Component {
+class PasswordReset extends Component {
   state = {
     email: '',
     emailError: '',
-    password: '',
-    showTooltip: false
+    showTooltip: false,
   };
 
   static propTypes = {
@@ -41,13 +40,13 @@ class SignIn extends Component {
   /**
   * @description handleSubmit
   * @param {object} event field input
-  * @memberof SignIn
+  * @memberof PasswordReset
   * @returns {null} returns null
   */
   handleSubmit = async (event) => {
     event.preventDefault();
     const {
-      email: userEmail, password: userPassword, emailError
+      email: userEmail, emailError
     } = this.state;
 
     if ((emailError && emailError.length) || checkUserState(this.state).length) {
@@ -55,33 +54,34 @@ class SignIn extends Component {
       return;
     }
 
-    const { dispatchRequest: SignInUser } = this.props;
-    await SignInUser({
+    const { dispatchRequest: RequestPasswordReset } = this.props;
+    await RequestPasswordReset({
       email: userEmail,
-      password: userPassword,
-      action: 'signin'
+      homeLink: 'https://banka-app-in-react.herokuapp.com/',
+      redirectLink: 'second',
     });
+    const { data: { ResetPassword }, history: { push } } = this.props;
 
-    const { data: { Auth }, history: { push } } = this.props;
-    const title = Auth.error !== null && Auth.error !== undefined ? Capitalize(Auth.error) : 'Error Occured';
-    const alertText = Auth.error || !Auth.user.id
+    const title = typeof ResetPassword.error === 'string' ? Capitalize(ResetPassword.error) : 'Error Occured';
+    const alertText = ResetPassword.error || !ResetPassword.data.message
       ? { type: 'error', title }
-      : { type: 'success', title: 'Login Successful' };
+      : { type: 'success', title: `${ResetPassword.data.message}. Link expires in an hour.` };
 
     await Swal.fire({
       ...alertText,
       showConfirmButton: false,
-      timer: 1500
+      timer: 2500
     });
-    if (Auth.isAuthenticated) {
-      push('/home');
+
+    if (ResetPassword.data.message) {
+      push('/signin');
     }
   }
 
   /**
   * @description handleChange
   * @param {string} input field input
-  * @memberof SignIn
+  * @memberof PasswordReset
   * @returns {null} returns null
   */
   handleChange = input => (e) => {
@@ -92,7 +92,7 @@ class SignIn extends Component {
   /**
   * @description handleBlur
   * @param {string} input field input
-  * @memberof SignIn
+  * @memberof PasswordReset
   * @returns {null} returns null
   */
   handleBlur = input => (e) => {
@@ -105,7 +105,7 @@ class SignIn extends Component {
   /**
   * @description handleFocus
   * @param {string} input field input
-  * @memberof SignIn
+  * @memberof PasswordReset
   * @returns {null} returns null
   */
   handleFocus = () => () => {
@@ -115,7 +115,7 @@ class SignIn extends Component {
   /**
   * @description handleMouseOut
   * @param {string} input field input
-  * @memberof SignIn
+  * @memberof PasswordReset
   * @returns {null} returns null
   */
   handleMouseOut = () => {
@@ -124,12 +124,13 @@ class SignIn extends Component {
 
 
   /**
-  * @description Render JSX
-  * @memberof SignIn
+  * @description handleChange changes
+  * @param {string} input field input
+  * @memberof PasswordReset
   * @returns {null} returns null
   */
   render() {
-    const { data: { Auth: { isLoading } } } = this.props;
+    const { data: { ResetPassword: { isLoading } } } = this.props;
     return (
       <UserForm
         handleChange={this.handleChange}
@@ -139,12 +140,12 @@ class SignIn extends Component {
         handleMouseOut={this.handleMouseOut}
         values={this.state}
         componentProps={this.props}
-        data={signInData}
-        formtype="Sign In"
+        data={resetPasswordData}
+        formtype="Reset Password"
         isLoading={isLoading}
       />
     );
   }
 }
 
-export default HocConnect(SignIn, AUTH_REQUEST);
+export default HocConnect(PasswordReset, RESET_PASSWORD_REQUEST);
