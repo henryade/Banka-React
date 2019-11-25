@@ -1,20 +1,13 @@
 import { connect } from 'react-redux';
 
-
-const HocConnect = (Component, dispatchName, dispatchRequest) => {
-  const mapDispatchToProps = dispatch => ({
-    [dispatchName]: (body) => {
-      dispatch(dispatchRequest(body));
-    }
-  });
-
+const HocConnect = (Component, dispatchRequest) => {
   const mapStateToProps = state => ({
     data: state,
   });
 
   return connect(
     mapStateToProps,
-    mapDispatchToProps
+    { dispatchRequest }
   )(Component);
 };
 

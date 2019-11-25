@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import SweetAlert from 'react-bootstrap-sweetalert';
 import { makeStyles } from '@material-ui/core/styles';
 import {
-  Paper, Typography, Container, Grid, TextField, Tooltip, Button
+  Paper, Typography, Container, Grid, CircularProgress, TextField, Tooltip, Button
 } from '@material-ui/core';
 import Logo from '../Common/Logo';
 
@@ -43,6 +44,7 @@ class UserForm extends Component {
       ])
     ).isRequired,
     data: PropTypes.arrayOf(PropTypes.object).isRequired,
+    isLoading: PropTypes.bool.isRequired
   }
 
   /**
@@ -57,7 +59,7 @@ class UserForm extends Component {
   };
 
   /**
-z* @description handle Click
+  * @description handle Click
   * @param {string} input field input
   * @memberof SignUp
   * @returns {null} returns null
@@ -71,26 +73,38 @@ z* @description handle Click
     const {
       values, handleChange, handleSubmit,
       data, formtype, handleFocus, handleBlur,
-      handleMouseOut
+      handleMouseOut, isLoading
     } = this.props;
     const { CustomTextField } = this;
+    const action = {
+      'Sign In': 'Login',
+      'Sign Up': 'Register',
+      'Reset Password': 'Reset'
+    };
     return (
       <Container className={`paper-container${(formtype === 'Sign Up') ? '' : '-signin'} text-center`} maxWidth="md">
+        {isLoading && (
+        <SweetAlert
+          title="Now Loading"
+          onConfirm={() => null}
+        >
+          <CircularProgress size={110} className="loader" />
+        </SweetAlert>
+        )}
         <Logo className="white" linkClass="mobile-only auth-brand-logo" />
         <Paper>
-          <Grid direction={(formtype === 'Sign Up') ? 'row' : 'row-reverse'} container spacing={2}>
+          <Grid direction={(formtype === 'Sign In') ? 'row-reverse' : 'row'} container spacing={2}>
             <Grid className="desktop-only nopaddingmargin" item sm={6} md={6}>
               <div className="fullheightwidth blue-background curved-edge">
-                <Logo className="white" linkClass="auth-brand-logo" />
+                <Logo className="white" linkClass="desktop-only auth-brand-logo" />
                 <div className="box-center white">
                   <Typography variant="h3" component="h2">
-                    { (formtype === 'Sign Up') ? 'Welcome Back!' : 'Hello Friend!'}
+                    { (formtype === 'Sign In') ? 'Hello Friend!' : 'Welcome Back!'}
                   </Typography>
                   <p className="medium-text medium-width">
-                    { (formtype === 'Sign Up') ? 'To continue our awesome journey together, login with your personal details'
-                      : 'Enter your personal details and start banking with us'}
+                    { (formtype === 'Sign In') ? 'Enter your personal details and start banking with us' : 'To continue our awesome journey together, login with your personal details' }
                   </p>
-                  <Button variant="outlined" size="large" className="white-border" onClick={this.handleClick((formtype === 'Sign Up') ? 'signin' : 'signup')}>{(formtype === 'Sign Up') ? 'Sign In' : 'Sign Up'}</Button>
+                  <Button variant="outlined" size="large" className="white-border" onClick={this.handleClick((formtype === 'Sign In') ? 'signup' : 'signin')}>{(formtype === 'Sign In') ? 'Sign Up' : 'Sign In'}</Button>
                 </div>
               </div>
             </Grid>
@@ -124,24 +138,33 @@ z* @description handle Click
                 <Grid item xs={12}>
                   <Tooltip title="Fill All Fields Appropriately" open={values.showTooltip}>
                     <Button type="submit" variant="contained" className="btn-size" size="large" color="primary" onMouseLeave={handleMouseOut} onBlur={handleMouseOut}>
-                      { (formtype === 'Sign Up') ? 'Register' : 'Log In'}
+                      { action[formtype] }
                     </Button>
                   </Tooltip>
                 </Grid>
-                { (formtype === 'Sign Up')
+                { (formtype === 'Sign In')
                   ? (
-                    <span className="mobile-only mobile-span">
-                      Already Registered?
-                      {' '}
-                      <Link to="/signin">Log In</Link>
-                    </span>
+                    <div className="mobile-links">
+                      <span className="mobile-span block">
+                        Forgot Password?
+                        {'   '}
+                        <Link to="/reset">Reset Password</Link>
+                      </span>
+                      <span className="mobile-only mobile-span">
+                        New User?
+                        {'   '}
+                        <Link to="/signup">Register</Link>
+                      </span>
+                    </div>
                   )
                   : (
-                    <span className="mobile-only mobile-span">
-                      New User?
-                      {' '}
-                      <Link to="/signup">Register</Link>
-                    </span>
+                    <div className="mobile-links">
+                      <span className="mobile-only mobile-span">
+                        {(formtype === 'Reset Password') ? 'Remember Password?' : 'Already Registered?' }
+                        {'   '}
+                        <Link to="/signin">Log In</Link>
+                      </span>
+                    </div>
                   )
                   }
               </form>

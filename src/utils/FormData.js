@@ -46,3 +46,12 @@ export const signInData = [
   signUpData[2],
   signUpData[3],
 ];
+
+export const resetPasswordData = [
+  signUpData[2]
+];
+
+export const changePasswordData = [
+  signUpData[3],
+  signUpData[4],
+];

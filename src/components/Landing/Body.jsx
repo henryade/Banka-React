@@ -1,6 +1,6 @@
 import React from 'react';
 import DivContainer from '../Common/DivContainer';
-import BodyData from './BodyData';
+import BodyData from '../../utils/BodyData';
 
 const Body = () => {
   const { bodyData } = BodyData;
